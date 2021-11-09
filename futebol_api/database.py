@@ -4,7 +4,7 @@ from pymongo.write_concern import WriteConcern
 from pymodm import MongoModel, fields
 
 # Criando Conexão junto ao banco
-connect("mongodb://localhost:27017/Futebol_api", alias="my-api")
+connect("mongodb://localhost:27017/Futebol_api", alias="my-app")
 
 # Tabela do Campeonato 
 class Campeonato(MongoModel):
@@ -14,7 +14,7 @@ class Campeonato(MongoModel):
     temporada = fields.IntegerField()
     tipo = fields.CharField()
     rodada = fields.IntegerField()
-    região = fields.IntegerField()
+    região = fields.CharField()
     class Meta:
         write_concern = WriteConcern(j=True)
         connection_alias = 'my-app'
@@ -23,7 +23,6 @@ class Tabela(MongoModel):
     time_id = fields.IntegerField()
     nome = fields.CharField()
     escudo = fields.CharField()
-    sigla = fields.CharField()
     pontos = fields.IntegerField()
     jogos = fields.IntegerField()
     vitorias = fields.IntegerField()
@@ -40,12 +39,26 @@ class Tabela(MongoModel):
 
 class Artilharia(MongoModel):
     atleta_id = fields.IntegerField()
-    atleta = field.CharField()
-    posição = field.CharField()
-    time_id = field.IntegerField()
-    time = field.CharField()
-    escudo = field.CharField()
-    gols = field_IntegerField()
+    atleta = fields.CharField()
+    posição = fields.CharField()
+    time_id = fields.IntegerField()
+    time = fields.CharField()
+    escudo = fields.CharField()
+    gols = fields.IntegerField()
+    class Meta:
+        write_concern = WriteConcern(j=True)
+        connection_alias = 'my-app'
+
+class Rodada(MongoModel):
+    rodada = fields.IntegerField()
+    status = fields.CharField()
+    clube = fields.CharField() 
+    escudo = fields.CharField()
+    gols = fields.IntegerField()
+    mandante = fields.IntegerField()
+    resultado = fields.CharField()
+    data = fields.CharField()
+    estadio = fields.CharField()
     class Meta:
         write_concern = WriteConcern(j=True)
         connection_alias = 'my-app'
@@ -56,15 +69,15 @@ class Partida(MongoModel):
     campeonato_id = fields.IntegerField()
     campeonato = fields.CharField()
     rodada = fields.IntegerField()
-    edição = field.IntegerField()
-    campeonato = field.IntegerField()
+    edição = fields.IntegerField()
+    campeonato = fields.IntegerField()
     time_mandante = fields.CharField()
     escudo_mandante = fields.CharField()
     placar_mandante = fields.IntegerField()
     placar_visitante = fields.IntegerField()
     escudo_visitante = fields.CharField()
-    time_visitante = fields.CharFiels()
-    data = fields.DateField()
+    time_visitante = fields.CharField()
+    data = fields.CharField()
     estadio = fields.CharField()
     class Meta:
         write_concern = WriteConcern(j=True)
@@ -75,7 +88,7 @@ class Estatisticas(MongoModel):
     time = fields.CharField()
     escudo = fields.CharField()
     partida_id = fields.IntegerField()
-    campeonato_id = fields.Charfield()
+    campeonato_id = fields.CharField()
     gols = fields.IntegerField()
     posse = fields.IntegerField()
     escanteios = fields.IntegerField()
